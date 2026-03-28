@@ -64,10 +64,13 @@ elif ! docker image inspect "$IMAGE_NAME" >/dev/null 2>&1; then
     docker pull "$IMAGE_NAME"
 fi
 
-if command -v docker-compose >/dev/null 2>&1; then
+if docker compose version >/dev/null 2>&1; then
+    COMPOSE_CMD=(docker compose)
+elif command -v docker-compose >/dev/null 2>&1; then
     COMPOSE_CMD=(docker-compose)
 else
-    COMPOSE_CMD=(docker compose)
+    echo -e "${RED}❌ Docker Compose 未安装${NC}"
+    exit 1
 fi
 
 export OPENCLAW_IMAGE_NAME="$IMAGE_NAME"
