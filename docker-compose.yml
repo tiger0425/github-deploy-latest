@@ -1,0 +1,47 @@
+# OpenClaw latest release 阿里云部署配置
+
+services:
+  workspace-fix:
+    image: alpine:latest
+    container_name: openclaw-latest-workspace-fix
+    user: root
+    volumes:
+      - openclaw_latest_workspace:/workspace
+    command: ["sh", "-lc", "chown -R 1000:1000 /workspace"]
+
+  openclaw-gateway:
+    image: ${OPENCLAW_IMAGE_NAME:-registry.cn-shenzhen.aliyuncs.com/yihuzh/openclaw:latest}
+    container_name: openclaw-latest-gateway
+    restart: unless-stopped
+    depends_on:
+      workspace-fix:
+        condition: service_completed_successfully
+    init: true
+    environment:
+      TZ: Asia/Shanghai
+      NODE_ENV: production
+      HOME: /home/node
+      TERM: xterm-256color
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN}
+      PATH: "/home/node/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      LARK_APP_ID: ${LARK_APP_ID}
+      LARK_APP_SECRET: ${LARK_APP_SECRET}
+      MINIMAX_API_KEY: ${MINIMAX_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    volumes:
+      - ./openclaw_data:/home/node/.openclaw
+      - openclaw_latest_workspace:/home/node/.openclaw/workspace
+    command: ["node", "openclaw.mjs", "gateway", "--bind", "127.0.0.1", "--port", "18889", "--allow-unconfigured"]
+
+  headless-shell:
+    image: chromedp/headless-shell:latest
+    container_name: openclaw-latest-headless-shell
+    network_mode: "service:openclaw-gateway"
+    restart: unless-stopped
+    shm_size: "2g"
+
+volumes:
+  openclaw_latest_workspace:
+    name: openclaw_latest_workspace
