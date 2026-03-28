@@ -1,7 +1,4 @@
 {
-  "meta": {
-    "channel": "latest-release"
-  },
   "browser": {
     "enabled": true,
     "headless": true,
@@ -79,7 +76,10 @@
     }
   },
   "gateway": {
-    "mode": "local"
+    "mode": "local",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true
+    }
   },
   "plugins": {
     "entries": {

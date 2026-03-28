@@ -51,9 +51,8 @@ mkdir -p openclaw_data/workspace
 chmod 755 openclaw_data
 chmod 755 openclaw_data/workspace
 
-if [ ! -f openclaw_data/openclaw.json ]; then
-    cp openclaw.json openclaw_data/
-fi
+echo "🧩 同步部署配置..."
+cp -f openclaw.json openclaw_data/openclaw.json
 
 echo "🔍 检查镜像..."
 if [ "$IMAGE_TAG" = "latest" ]; then

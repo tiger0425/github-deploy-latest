@@ -49,6 +49,7 @@ export REPO_URL=https://github.com/tiger0425/github-deploy-latest.git
 
 - 检查 Docker / Docker Compose
 - 读取 `.env`
+- 每次部署都会把仓库里的 `openclaw.json` 同步到运行目录，避免旧配置残留
 - 自动拉取阿里云 ACR 镜像
 - 启动 `docker-compose.yml`
 
@@ -63,5 +64,11 @@ export REPO_URL=https://github.com/tiger0425/github-deploy-latest.git
 - 这个仓库面向“最新版本快速验证”
 - 默认使用阿里云 ACR 的 `latest` 镜像
 - 如果需要生产级可复现部署，建议改用具体版本 tag
+
+## 常见部署问题
+
+- 如果网关报 `openclaw.json` 配置错误，先确认仓库里的 `openclaw.json` 是否已更新；下次执行 `./deploy.sh` 会自动同步到运行目录。
+- 如果远端是老版 `docker-compose`，脚本会优先使用 `docker compose`。
+- 如果是非 loopback 启动，仓库里的 `gateway.controlUi.dangerouslyAllowHostHeaderOriginFallback=true` 会避免 Control UI 的 origin 校验拦截。
 
 > 当前这套文件仍托管在主仓库里维护，但文档已经按“独立仓库根目录”写法整理，迁出后可直接使用。
