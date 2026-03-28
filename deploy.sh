@@ -47,7 +47,9 @@ if ! grep -q "LARK_APP_SECRET=" .env || grep -q "LARK_APP_SECRET=xxxxx" .env; th
 fi
 
 mkdir -p openclaw_data
+mkdir -p openclaw_data/workspace
 chmod 755 openclaw_data
+chmod 755 openclaw_data/workspace
 
 if [ ! -f openclaw_data/openclaw.json ]; then
     cp openclaw.json openclaw_data/

@@ -6,7 +6,7 @@ services:
     container_name: openclaw-latest-workspace-fix
     user: root
     volumes:
-      - openclaw_latest_workspace:/workspace
+      - ./openclaw_data/workspace:/workspace
     command: ["sh", "-lc", "chown -R 1000:1000 /workspace"]
 
   openclaw-gateway:
@@ -32,8 +32,7 @@ services:
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
     volumes:
       - ./openclaw_data:/home/node/.openclaw
-      - openclaw_latest_workspace:/home/node/.openclaw/workspace
-    command: ["node", "openclaw.mjs", "gateway", "--bind", "127.0.0.1", "--port", "18889", "--allow-unconfigured"]
+    command: ["node", "openclaw.mjs", "gateway", "--bind", "lan", "--port", "18889", "--allow-unconfigured"]
 
   headless-shell:
     image: chromedp/headless-shell:latest
@@ -41,7 +40,3 @@ services:
     network_mode: "service:openclaw-gateway"
     restart: unless-stopped
     shm_size: "2g"
-
-volumes:
-  openclaw_latest_workspace:
-    name: openclaw_latest_workspace
