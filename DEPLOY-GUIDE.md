@@ -3,7 +3,7 @@
 ## 方式一：直接克隆独立仓库
 
 ```bash
-git clone <你的 github-deploy-latest 仓库地址> /root/openclaw-deploy-latest
+git clone https://github.com/tiger0425/github-deploy-latest.git /root/openclaw-deploy-latest
 cd /root/openclaw-deploy-latest
 cp .env.example .env
 vim .env

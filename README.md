@@ -23,7 +23,7 @@ export OPENCLAW_IMAGE_NAME=registry.cn-shenzhen.aliyuncs.com/yihuzh/openclaw:v20
 ### 方式一：直接克隆独立仓库（推荐）
 
 ```bash
-git clone <你的 github-deploy-latest 仓库地址> /root/openclaw-deploy-latest
+git clone https://github.com/tiger0425/github-deploy-latest.git /root/openclaw-deploy-latest
 cd /root/openclaw-deploy-latest
 cp .env.example .env
 vim .env
@@ -35,7 +35,7 @@ chmod +x deploy.sh
 
 ```bash
 chmod +x bootstrap-from-github.sh
-export REPO_URL=<你的 github-deploy-latest 仓库地址>
+export REPO_URL=https://github.com/tiger0425/github-deploy-latest.git
 ./bootstrap-from-github.sh
 ```
 
