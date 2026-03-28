@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-REPO_URL="${REPO_URL:-}"
+REPO_URL="${REPO_URL:-https://github.com/tiger0425/github-deploy-latest.git}"
 TARGET_DIR="${TARGET_DIR:-/root/openclaw-deploy-latest}"
 
 if [ -z "$REPO_URL" ]; then
